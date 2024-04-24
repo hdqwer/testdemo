@@ -1,0 +1,111 @@
+
+
+package com.wedu.modules.sys.entity;
+
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.wedu.common.validator.group.AddGroup;
+import com.wedu.common.validator.group.UpdateGroup;
+import lombok.Data;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * 系统用户
+ *
+ * @author wedu
+ */
+@Data
+@TableName("sys_user")
+public class SysUserEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 用户ID
+	 */
+	@TableId
+	private Long userId;
+
+	/**
+	 * 用户名
+	 */
+	//表单验证
+	@NotBlank(message="用户名不能为空", groups = {AddGroup.class, UpdateGroup.class})
+	private String username;
+
+	/**
+	 * 密码
+	 */
+	@NotBlank(message="密码不能为空", groups = AddGroup.class)
+	private String password;
+
+	/**
+	 * 盐
+	 */
+	private String salt;
+
+	/**
+	 * 部门ID
+	 */
+	private String deptId;
+
+	/**
+	 * 邮箱
+	 */
+	@NotBlank(message="邮箱不能为空", groups = {AddGroup.class, UpdateGroup.class})
+	@Email(message="邮箱格式不正确", groups = {AddGroup.class, UpdateGroup.class})
+	private String email;
+
+	/**
+	 * 手机号
+	 */
+	private String mobile;
+
+	/**
+	 * 头像
+	 */
+	private String avatar;
+
+	/**
+	 * 昵称
+	 */
+	private String nickName;
+
+	/**
+	 * 真实姓名
+	 */
+	private String realName;
+
+	/**
+	 * 微信小程序openid
+	 */
+	private String miniOpenid;
+
+	/**
+	 * 状态  0：禁用   1：正常
+	 */
+	private Integer status;
+
+	/**
+	 * 角色ID列表
+	 */
+	//这个字段在数据库中并不存在
+	@TableField(exist=false)
+	private List<Long> roleIdList;
+
+	/**
+	 * 创建者ID
+	 */
+	private Long createUserId;
+
+	/**
+	 * 创建时间
+	 */
+	private Date createTime;
+
+}
